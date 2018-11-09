@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,11 +11,11 @@ using DatabaseProject.Services;
 
 namespace WebApiProject.Controllers
 {
-    public class ProductController : ApiController
+    public class ProductsController : ApiController
     {
 	    private ProductService ProductService;
 
-	    public ProductController()
+	    public ProductsController()
 	    {
 		    ProductService = new ProductService();
 	    }
@@ -36,13 +37,20 @@ namespace WebApiProject.Controllers
 		[Route("api/products")]
 		public void Post([FromBody]Product product)
 		{
+			Debug.WriteLine("Product recieved");
+			Debug.WriteLine(product.Name);
+
 			Product p = new Product
 			{
 				Catagory = Catagory.CAMERA,
+				Name = "Nikon",
 				Description = "This is a Camera",
+				Specification = "15 MP",
+				Reviews = new List<Review>()
 
-			}
-			ProductService.Add();
+
+			};
+			ProductService.Add(p);
 		}
 
         // PUT: api/Product/5

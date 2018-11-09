@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseContext.cs" />
+    <Compile Include="ShopDbContext.cs" />
     <Compile Include="Enums\Catagory.cs" />
     <Compile Include="Migrations\201811050639428_Initial.cs" />
     <Compile Include="Migrations\201811050639428_Initial.Designer.cs">

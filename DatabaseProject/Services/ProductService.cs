@@ -10,10 +10,10 @@ namespace DatabaseProject.Services
 {
 	public class ProductService
 	{
-		//DbSet context = new DatabaseContext().Products;
+		//DbSet context = new ShopDbContext().Products;
 		public Product Add(Product product)
 		{
-			using (var context = new DatabaseContext())
+			using (var context = new ShopDbContext())
 			{
 				context.Database.Log = Console.WriteLine;
 				var response = context.Products.Add(product);
@@ -24,7 +24,7 @@ namespace DatabaseProject.Services
 
 		public Product Get(int id)
 		{
-			using (var context = new DatabaseContext())
+			using (var context = new ShopDbContext())
 			{
 				context.Database.Log = Console.WriteLine;
 				return context.Products.Find(id);
@@ -33,7 +33,7 @@ namespace DatabaseProject.Services
 
 		public Product Remove(Product product)
 		{
-			using (var context = new DatabaseContext())
+			using (var context = new ShopDbContext())
 			{
 				context.Database.Log = Console.WriteLine;
 				var response = context.Products.Remove(product);
@@ -44,7 +44,7 @@ namespace DatabaseProject.Services
 
 		public Product Edit(Product response, int id)
 		{
-			using (var context = new DatabaseContext())
+			using (var context = new ShopDbContext())
 			{
 				//Get product. If it doesn't exist return null
 				Product oldProduct = context.Products.Find(id);
