@@ -9,10 +9,10 @@ namespace DatabaseProject.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(DatabaseProject.ShopDbContext dbContext)
+        protected override void Seed(DatabaseProject.ShopDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

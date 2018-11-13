@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using DatabaseProject.Enums;
 using DatabaseProject.Models;
@@ -20,47 +17,47 @@ namespace WebApiProject.Controllers
 		    ProductService = new ProductService();
 	    }
 
-	    // GET: api/Product
-        public IEnumerable<string> Get()
+		//TODO : Get by keyword controller
+		// GET: api/Product
+		[HttpGet]
+		[Route("api/products/search/{keyword}")]
+		public List<Product> GetByKeyWord(string keyword)
+		{
+			return ProductService.GetProductsByKeyword(keyword);
+		}
+
+		// GET: api/Product/5
+		[HttpGet]
+		[Route("api/products/{id}")]
+		public Product Get(int id)
         {
-            return new string[] { "value1", "value2" };
+	        return ProductService.Get(id);
         }
 
-        // GET: api/Product/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-		// POST: api/Product
+		// POST: api/Products
 		[HttpPost]
 		[Route("api/products")]
 		public void Post([FromBody]Product product)
 		{
-			Debug.WriteLine("Product recieved");
-			Debug.WriteLine(product.Name);
-
-			Product p = new Product
-			{
-				Catagory = Catagory.CAMERA,
-				Name = "Nikon",
-				Description = "This is a Camera",
-				Specification = "15 MP",
-				Reviews = new List<Review>()
-
-
-			};
-			ProductService.Add(p);
+			ProductService.Add(product);
 		}
 
         // PUT: api/Product/5
-        public void Put(int id, [FromBody]string value)
+		[HttpPut]
+		[Route("api/products/id")]
+        public void Put(int id, [FromBody]Product product)
         {
+	        ProductService.Edit(product, id);
         }
 
-        // DELETE: api/Product/5
-        public void Delete(int id)
+		// DELETE: api/Product/5
+		[HttpDelete]
+		[Route("api/products/id")]
+		public void Delete(int id)
         {
+	        ProductService.Remove(id);
         }
+
+
     }
 }

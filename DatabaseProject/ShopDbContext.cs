@@ -1,13 +1,11 @@
-﻿using System.Configuration;
-using System.Data.Entity;
-using System.Diagnostics;
+﻿using System.Data.Entity;
 using DatabaseProject.Models;
 
 namespace DatabaseProject
 {
     public class ShopDbContext: DbContext
     {
-	    public ShopDbContext():base("name=ShopDbContext")
+	    public ShopDbContext():base("shoppingDatabase")
 	    {
 			Database.SetInitializer(new CreateDatabaseIfNotExists<ShopDbContext>());
 		}

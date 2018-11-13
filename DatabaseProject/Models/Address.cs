@@ -16,6 +16,7 @@ namespace DatabaseProject.Models
 		public string Zip { get; set; }
 		public string Phone { get; set; }
 		[Required]
-		public Customer Customer { get; set; }
+		public virtual Customer Customer { get; set; }
+		public int CustomerId { get; set; }
 	}
 }

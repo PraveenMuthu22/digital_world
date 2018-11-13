@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseProject.Models
 {
@@ -13,8 +8,10 @@ namespace DatabaseProject.Models
 		public string Text { get; set; }
 		public int Stars { get; set; }
 		[Required]
-		public Product Product { get; set; }
+		public virtual Product Product { get; set; }
+		public int ProductId { get; set; }
 		[Required]
-		public Customer Customer { get; set; }
+		public virtual Customer Customer { get; set; }
+		public int CustomerId { get; set; }
 	}
 }

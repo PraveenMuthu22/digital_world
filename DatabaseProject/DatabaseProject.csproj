@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DatabaseProject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WebApiProject\Bin\DatabaseProject.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -49,12 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201811120943074_Initial.cs" />
+    <Compile Include="Migrations\201811120943074_Initial.Designer.cs">
+      <DependentUpon>201811120943074_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CustomerService.cs" />
     <Compile Include="ShopDbContext.cs" />
     <Compile Include="Enums\Catagory.cs" />
-    <Compile Include="Migrations\201811050639428_Initial.cs" />
-    <Compile Include="Migrations\201811050639428_Initial.Designer.cs">
-      <DependentUpon>201811050639428_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -65,11 +70,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811050639428_Initial.resx">
-      <DependentUpon>201811050639428_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811120943074_Initial.resx">
+      <DependentUpon>201811120943074_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
