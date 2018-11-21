@@ -47,7 +47,7 @@ namespace DatabaseProject.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Catagory = c.Int(nullable: false),
+                        Category = c.Int(nullable: false),
                         Name = c.String(),
                         Description = c.String(),
                         Specification = c.String(),

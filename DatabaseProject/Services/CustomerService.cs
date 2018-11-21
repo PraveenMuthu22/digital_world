@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using AutoMapper;
 using DatabaseProject.Models;
+using DatabaseProject.Models_Updated;
 
 namespace DatabaseProject.Services
 {
@@ -36,16 +38,16 @@ namespace DatabaseProject.Services
 		/**
 		 * Remove given customer
 		 */
-		public bool Remove(Customer Customer)
+		public bool Remove(int id)
 		{
 			using (var context = new ShopDbContext())
 			{
-				Customer oldCustomer = context.Customers.Find(Customer.Id);
+				Customer oldCustomer = context.Customers.Find(id);
 				if (oldCustomer == null)
 				{
 					return false;
 				}
-				context.Customers.Remove(Customer);
+				context.Customers.Remove(oldCustomer);
 				return true;
 			}
 		}
@@ -53,7 +55,7 @@ namespace DatabaseProject.Services
 		/**
 		 * Edit given customer
 		 */
-		public bool Edit(Customer updatedCustomer, int id)
+		public bool Edit(Customer responseCustomer, int id)
 		{
 			using (var context = new ShopDbContext())
 			{
@@ -63,6 +65,10 @@ namespace DatabaseProject.Services
 				{
 					return false;
 				}
+
+				var config = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerUpdated>());
+				var mapper = config.CreateMapper();
+				CustomerUpdated updatedCustomer = mapper.Map<CustomerUpdated>(responseCustomer);
 
 				context.Entry(oldCustomer).CurrentValues.SetValues(updatedCustomer);
 

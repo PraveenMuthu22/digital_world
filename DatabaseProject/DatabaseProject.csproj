@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="DatabaseProject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\WebApiProject\Bin\DatabaseProject.dll</HintPath>
@@ -45,6 +48,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,13 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201811120943074_Initial.cs" />
-    <Compile Include="Migrations\201811120943074_Initial.Designer.cs">
-      <DependentUpon>201811120943074_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201811210503387_Initial.cs" />
+    <Compile Include="Migrations\201811210503387_Initial.Designer.cs">
+      <DependentUpon>201811210503387_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models Updated\CustomerUpdated.cs" />
+    <Compile Include="Models Updated\ProductUpdated.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="ShopDbContext.cs" />
-    <Compile Include="Enums\Catagory.cs" />
+    <Compile Include="Enums\Category.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -75,8 +83,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811120943074_Initial.resx">
-      <DependentUpon>201811120943074_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811210503387_Initial.resx">
+      <DependentUpon>201811210503387_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

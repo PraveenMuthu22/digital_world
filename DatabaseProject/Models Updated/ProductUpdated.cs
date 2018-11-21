@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DatabaseProject.Enums;
+using DatabaseProject.Models;
 
-namespace DatabaseProject.Models
+namespace DatabaseProject.Models_Updated
 {
-	public class Product
+	class ProductUpdated
 	{
-		public Product()
-		{
-			Reviews = new List < Review >();
-		}
-
-		public int Id { get; set; }
 		public Category Category { get; set; }
-		public string Name { get; set; }  
+		public string Name { get; set; }
 		public string Description { get; set; }
 		public string Specification { get; set; }
 		public List<Review> Reviews { get; set; }

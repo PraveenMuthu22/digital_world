@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using AutoMapper;
 using DatabaseProject.Enums;
 using DatabaseProject.Models;
+using DatabaseProject.Models_Updated;
 
 namespace DatabaseProject.Services
 {
@@ -33,14 +36,13 @@ namespace DatabaseProject.Services
 		/**
 		 * Get given product
 		 */
-		//Eager Loading : Load the product along with the reviews
 		public Product Get(int id)
 		{
 			using (var context = new ShopDbContext())
 			{
 				context.Database.Log = Console.WriteLine;
-				return context.Products.Include(p => p.Reviews).FirstOrDefault(p => p.Id == id);
-			}
+				return context.Products.Find(id);
+			}			
 		}
 
 		/**
@@ -57,6 +59,8 @@ namespace DatabaseProject.Services
 				}
 
 				context.Products.Remove(product);
+
+				context.SaveChanges();
 				return true;
 			}
 		}
@@ -64,7 +68,7 @@ namespace DatabaseProject.Services
 		/**
 		 * Modify selected product using data form passed product
 		 */
-		public bool Edit(Product updatedProduct, int id)
+		public bool Edit(Product responseProduct, int id)
 		{
 			using (var context = new ShopDbContext())
 			{
@@ -75,6 +79,10 @@ namespace DatabaseProject.Services
 					return false;
 				}
 
+				var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductUpdated>());
+				var mapper = config.CreateMapper();
+				ProductUpdated updatedProduct =  mapper.Map<ProductUpdated>(responseProduct);
+
 				context.Entry(oldProduct).CurrentValues.SetValues(updatedProduct);
 
 				context.SaveChanges();
@@ -83,14 +91,14 @@ namespace DatabaseProject.Services
 		}
 
 		/**
-		 * Get a list of products that belongs to given catagory
+		 * Get a list of products that belongs to given category
 		 */
-		public List<Product> GetByCatagory(Catagory catagory)
+		public List<Product> GetByCatagory(Category category)
 		{
 			using (var context = new ShopDbContext())
 			{
 				List<Product> products = context.Products
-					.Where(p => p.Catagory == catagory).ToList();
+					.Where(p => p.Category == category).ToList();
 
 				return products;
 			}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.Enums
 {
-	public enum Catagory
+	public enum Category
 	{
 		COMPUTER,
 		TV,

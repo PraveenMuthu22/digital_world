@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseProject;
 using DatabaseProject.Enums;
 using DatabaseProject.Models;
 using DatabaseProject.Services;
@@ -17,14 +11,11 @@ namespace ConsoleAppp
 	{
 		static void Main(string[] args)
 		{
-			//InitializeDb();
+			InitializeDb();
 
 			ProductService productService = new ProductService();
 			CustomerService customerService = new CustomerService();
-
-			List<Product> products = productService.GetProductsByKeyword("mac");
-			products.ForEach(p => Debug.WriteLine(p.Name));
-			//Console.ReadLine();
+			Console.ReadLine();
 		}
 
 		static void InitializeDb()
@@ -33,7 +24,7 @@ namespace ConsoleAppp
 			CustomerService customerService = new CustomerService();
 			Product p = new Product
 			{
-				Catagory = Catagory.CAMERA,
+				Category = Category.CAMERA,
 				Name = "Nikon",
 				Description = "Professional Camera",
 				Specification = "23 MP",
@@ -41,7 +32,7 @@ namespace ConsoleAppp
 
 			Product p1 = new Product
 			{
-				Catagory = Catagory.COMPUTER,
+				Category = Category.COMPUTER,
 				Name = "Surface Pro 3",
 				Description = "Tablet / Laptop",
 				Specification = "i5 16 GB ram",
@@ -49,7 +40,7 @@ namespace ConsoleAppp
 
 			Product p2 = new Product
 			{
-				Catagory = Catagory.COMPUTER,
+				Category = Category.COMPUTER,
 				Name = "Macbook pro 2015",
 				Description = "Laptop",
 				Specification = "i5 16 GB ram",
@@ -57,7 +48,7 @@ namespace ConsoleAppp
 
 			Product p3 = new Product
 			{
-				Catagory = Catagory.HEADPHONE_OR_SPEAKER,
+				Category = Category.HEADPHONE_OR_SPEAKER,
 				Name = "Senheiser in ear earphones",
 				Description = "Dun Dun DUn",
 				Specification = "Noize Cancellation",
