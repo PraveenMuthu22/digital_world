@@ -123,8 +123,6 @@ namespace DatabaseProject.Services
 					return false;
 				}
 
-				review.Customer = customer;
-
 				product.Reviews.Add(review);
 
 				context.SaveChanges();

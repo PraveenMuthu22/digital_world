@@ -17,30 +17,26 @@ namespace DatabaseProject.Migrations
                         City = c.String(),
                         Zip = c.String(),
                         Phone = c.String(),
-                        CustomerId = c.Int(nullable: false),
-                        Customer_Id = c.Int(),
+                        CustomerId = c.String(nullable: false),
+                        Customer_Email = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Customers", t => t.Customer_Id)
-                .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
-                .Index(t => t.CustomerId)
-                .Index(t => t.Customer_Id);
+                .ForeignKey("dbo.Customers", t => t.Customer_Email)
+                .Index(t => t.Customer_Email);
             
             CreateTable(
                 "dbo.Customers",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Email = c.String(nullable: false, maxLength: 128),
                         FirstName = c.String(),
                         LastName = c.String(),
-                        Email = c.String(),
                         Password = c.String(),
-                        AddressId = c.Int(nullable: false),
-                        DefaultAddress_Id = c.Int(),
+                        DefaultAddressId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Addresses", t => t.DefaultAddress_Id)
-                .Index(t => t.DefaultAddress_Id);
+                .PrimaryKey(t => t.Email)
+                .ForeignKey("dbo.Addresses", t => t.DefaultAddressId, cascadeDelete: true)
+                .Index(t => t.DefaultAddressId);
             
             CreateTable(
                 "dbo.Products",
@@ -62,45 +58,44 @@ namespace DatabaseProject.Migrations
                         Text = c.String(),
                         Stars = c.Int(nullable: false),
                         ProductId = c.Int(nullable: false),
-                        CustomerId = c.Int(nullable: false),
+                        CustomerId = c.String(nullable: false),
+                        Customer_Email = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
                 .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
+                .ForeignKey("dbo.Customers", t => t.Customer_Email)
                 .Index(t => t.ProductId)
-                .Index(t => t.CustomerId);
+                .Index(t => t.Customer_Email);
             
             CreateTable(
                 "dbo.ProductCustomers",
                 c => new
                     {
                         Product_Id = c.Int(nullable: false),
-                        Customer_Id = c.Int(nullable: false),
+                        Customer_Email = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => new { t.Product_Id, t.Customer_Id })
+                .PrimaryKey(t => new { t.Product_Id, t.Customer_Email })
                 .ForeignKey("dbo.Products", t => t.Product_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Customers", t => t.Customer_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Customers", t => t.Customer_Email, cascadeDelete: true)
                 .Index(t => t.Product_Id)
-                .Index(t => t.Customer_Id);
+                .Index(t => t.Customer_Email);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Addresses", "CustomerId", "dbo.Customers");
+            DropForeignKey("dbo.Reviews", "Customer_Email", "dbo.Customers");
             DropForeignKey("dbo.Reviews", "ProductId", "dbo.Products");
-            DropForeignKey("dbo.Reviews", "CustomerId", "dbo.Customers");
-            DropForeignKey("dbo.ProductCustomers", "Customer_Id", "dbo.Customers");
+            DropForeignKey("dbo.ProductCustomers", "Customer_Email", "dbo.Customers");
             DropForeignKey("dbo.ProductCustomers", "Product_Id", "dbo.Products");
-            DropForeignKey("dbo.Customers", "DefaultAddress_Id", "dbo.Addresses");
-            DropForeignKey("dbo.Addresses", "Customer_Id", "dbo.Customers");
-            DropIndex("dbo.ProductCustomers", new[] { "Customer_Id" });
+            DropForeignKey("dbo.Customers", "DefaultAddressId", "dbo.Addresses");
+            DropForeignKey("dbo.Addresses", "Customer_Email", "dbo.Customers");
+            DropIndex("dbo.ProductCustomers", new[] { "Customer_Email" });
             DropIndex("dbo.ProductCustomers", new[] { "Product_Id" });
-            DropIndex("dbo.Reviews", new[] { "CustomerId" });
+            DropIndex("dbo.Reviews", new[] { "Customer_Email" });
             DropIndex("dbo.Reviews", new[] { "ProductId" });
-            DropIndex("dbo.Customers", new[] { "DefaultAddress_Id" });
-            DropIndex("dbo.Addresses", new[] { "Customer_Id" });
-            DropIndex("dbo.Addresses", new[] { "CustomerId" });
+            DropIndex("dbo.Customers", new[] { "DefaultAddressId" });
+            DropIndex("dbo.Addresses", new[] { "Customer_Email" });
             DropTable("dbo.ProductCustomers");
             DropTable("dbo.Reviews");
             DropTable("dbo.Products");

@@ -89,14 +89,10 @@ namespace DatabaseProject.Services
 				{
 					return false;
 				}
-
-				//Add customer reference to address
-				address.Customer = customer;
-
 				//If it's the first address, make it default address
 				if (customer.Addresses.Count == 0)
 				{
-					customer.DefaultAddress = address;
+					customer.DefaultAddressId = address.Id;
 				}
 
 				customer.Addresses.Add(address);
@@ -120,8 +116,7 @@ namespace DatabaseProject.Services
 				{
 					return false;
 				}
-
-				customer.DefaultAddress = address;
+				customer.DefaultAddressId = address.Id;
 				context.SaveChanges();
 				return true;
 			}
@@ -136,10 +131,7 @@ namespace DatabaseProject.Services
 				{
 					return null;
 				}
-
-				context.Entry(customer).Reference(c => c.DefaultAddress).Load();
-
-				return customer.DefaultAddress;
+				return context.Addresses.Find(customer.DefaultAddressId);
 			}
 		}
 

@@ -5,19 +5,17 @@ using DatabaseProject.Services;
 
 namespace DatabaseProject.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DatabaseProject.ShopDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ShopDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(DatabaseProject.ShopDbContext context)
+        protected override void Seed(ShopDbContext context)
         {
 			//  This method will be called after migrating to the latest version.
 
@@ -65,14 +63,24 @@ namespace DatabaseProject.Migrations
 		        Password = "123",
 	        };
 
+	        Customer c2 = new Customer
+	        {
+		        Email = "bob@gmail.com",
+		        FirstName = "Bob",
+		        LastName = "Jordan",
+		        Password = "234",
+	        };
 
-	        productService.Add(p);
+
+			productService.Add(p);
 	        productService.Add(p1);
 	        productService.Add(p2);
 	        productService.Add(p3);
 	        customerService.Add(c);
+	        customerService.Add(c2);
 
-	        productService.AddReview(
+
+			productService.AddReview(
 		        new Review
 		        {
 			        CustomerId = 1,
