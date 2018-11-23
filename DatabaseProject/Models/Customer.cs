@@ -1,27 +1,32 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DatabaseProject.Models
 {
-	public class Customer
-	{
-		public Customer()
-		{
-			Addresses = new List<Address>();
-			Reviews = new List<Review>();
-			Products = new List<Product>();
-		}
+    public class Customer
+    {
+        public Customer()
+        {
+            Addresses = new List<Address>();
+            Reviews = new List<Review>();
+            Purchases = new List<Purchase>();
+        }
 
-		public int Id { get; set; }
-		[Index(IsUnique = true)] public string Email { get; set; }
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
-		public string Password { get; set; }
-		public int? DefaultAddressId { get; set; }
+        public int Id { get; set; }
+
+        [MaxLength(50)]
+        [Index(IsUnique = true)]
+        public string Email { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Password { get; set; }
+        public int? DefaultAddressId { get; set; }
 
 
-		public List<Address> Addresses { get; set; }
-		public List<Review> Reviews { get; set; }
-		public List<Product> Products { get; set; }
-	}
+        public List<Address> Addresses { get; set; }
+        public List<Review> Reviews { get; set; }
+        public List<Purchase> Purchases { get; set; }
+    }
 }

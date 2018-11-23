@@ -110,12 +110,13 @@ namespace DatabaseProject.Migrations
 		        CustomerId = 1,
 	        });
 
-	        customerService.AddPurchase(1, 1);
+            customerService.SetDefaultAddress(1, 1);
+
+            customerService.AddPurchase(1, 1);
 	        customerService.AddPurchase(1, 2);
 
 
-	        customerService.SetDefaultAddress(1, 1);
-	        Debug.WriteLine(customerService.GetDefaulAddress(1).LineOne);
+
 		}
     }
 }

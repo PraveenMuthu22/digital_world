@@ -55,8 +55,18 @@ namespace WebApiProject.Controllers
 			return mapper.Map<ProductResponse>(productService.Get(id));
 		}
 
-		// POST: api/Products
-		[HttpPost]
+	    // GET: api/Product/reviews/1
+	    [HttpGet]
+	    [Route("api/products/reviews/{id}")]
+	    public List<ReviewResponse> GetReviews(int id)
+	    {
+	        var config = new MapperConfiguration(cfg => cfg.CreateMap<Review, ReviewResponse>());
+	        var mapper = config.CreateMapper();
+	        return mapper.Map<List<Review>, List<ReviewResponse>>(productService.GetReviews(id));
+	    }
+
+        // POST: api/Products
+        [HttpPost]
 		[Route("api/products")]
 		public void Post([FromBody] Product product)
 		{
@@ -65,10 +75,10 @@ namespace WebApiProject.Controllers
 
 		// PUT: api/Products/5
 		[HttpPut]
-		[Route("api/products/{id}")]
-		public void Put(int id, [FromBody] Product product)
+		[Route("api/products")]
+		public void Put([FromBody] Product product)
 		{
-			productService.Edit(product, id);
+			productService.Edit(product);
 		}
 
 		// DELETE: api/Products/5

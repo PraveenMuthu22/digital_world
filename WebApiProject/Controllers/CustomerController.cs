@@ -48,10 +48,10 @@ namespace WebApiProject.Controllers
 
 		// PUT: api/Customers/5
 		[HttpPut]
-		[Route("api/Customers/{id}")]
-		public void Put(int id, [FromBody]Customer customer)
+		[Route("api/Customers")]
+		public void Put([FromBody]Customer customer)
         {
-	        customerService.Edit(customer, id);
+	        customerService.Edit(customer);
 		}
 
 		// GET: api/Customers/addresses/1
@@ -97,7 +97,7 @@ namespace WebApiProject.Controllers
 		// GET: api/Customers/purchase/5
 		[HttpGet]
 	    [Route("api/Customers/purchase/{id}")]
-	    public List<Product> GetPurchases(int id)
+	    public List<Purchase> GetPurchases(int id)
 	    {
 		    return customerService.GetPurchases(id);
 	    }

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace DatabaseProject.Models
+namespace WebApiProject.View_Models
 {
-    public class Address
+    public class AddressResponse
     {
         public int Id { get; set; }
         public string LineOne { get; set; }
@@ -15,8 +13,6 @@ namespace DatabaseProject.Models
         public string City { get; set; }
         public string Zip { get; set; }
         public string Phone { get; set; }
-
-        [Required] public Customer Customer { get; set; }
         public int CustomerId { get; set; }
     }
 }

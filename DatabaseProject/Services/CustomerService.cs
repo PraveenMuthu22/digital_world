@@ -55,12 +55,12 @@ namespace DatabaseProject.Services
 		/**
 		 * Edit given customer
 		 */
-		public bool Edit(Customer responseCustomer, int id)
+		public bool Edit(Customer responseCustomer)
 		{
 			using (var context = new ShopDbContext())
 			{
 				//Get Customer. If it doesn't exist return null
-				Customer oldCustomer = context.Customers.Find(id);
+				Customer oldCustomer = context.Customers.Find(responseCustomer.Id);
 				if (oldCustomer == null)
 				{
 					return false;
@@ -89,11 +89,17 @@ namespace DatabaseProject.Services
 				{
 					return false;
 				}
-				//If it's the first address, make it default address
-				if (customer.Addresses.Count == 0)
+
+			    //Add customer reference 
+			    address.Customer = customer;
+
+
+                //If it's the first address, make it default address
+                if (customer.Addresses.Count == 0)
 				{
 					customer.DefaultAddressId = address.Id;
 				}
+
 
 				customer.Addresses.Add(address);
 				context.SaveChanges();
@@ -186,13 +192,23 @@ namespace DatabaseProject.Services
 					return false;
 				}
 
-				customer.Products.Add(product);
+			    Purchase purchase = new Purchase
+			    {
+                    Date = DateTime.Now,
+                    Customer = customer,
+                    CustomerId = customerId,
+                    Product = product,
+                    ProductId = productId,
+			    };
+           
+
+				customer.Purchases.Add(purchase);
 				context.SaveChanges();
 				return true;
 			}
 		}
 
-		public List<Product> GetPurchases(int id)
+		public List<Purchase> GetPurchases(int id)
 		{
 			using (var context = new ShopDbContext())
 			{
@@ -202,8 +218,8 @@ namespace DatabaseProject.Services
 					return null;
 				}
 				
-				context.Entry(customer).Collection(c => c.Products).Load();
-				return customer.Products;
+				context.Entry(customer).Collection(c => c.Purchases).Load();
+				return customer.Purchases;
 			}
 		}
 	}

@@ -13,7 +13,9 @@ namespace ConsoleAppp
 		{
 			ProductService productService = new ProductService();
 			CustomerService customerService = new CustomerService();
-			Console.ReadLine();
+
+		    customerService.AddPurchase(1, 1);
+            Console.ReadLine();
 		}
 
 		

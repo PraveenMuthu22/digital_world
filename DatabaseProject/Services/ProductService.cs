@@ -68,12 +68,12 @@ namespace DatabaseProject.Services
 		/**
 		 * Modify selected product using data form passed product
 		 */
-		public bool Edit(Product responseProduct, int id)
+		public bool Edit(Product responseProduct)
 		{
 			using (var context = new ShopDbContext())
 			{
 				//Get product. If it doesn't exist return null
-				Product oldProduct = context.Products.Find(id);
+				Product oldProduct = context.Products.Find(responseProduct.Id);
 				if (oldProduct == null)
 				{
 					return false;
@@ -122,6 +122,10 @@ namespace DatabaseProject.Services
 				{
 					return false;
 				}
+
+                //add customer and product reference to review
+			    review.Customer = customer;
+			    review.Product = product;
 
 				product.Reviews.Add(review);
 
