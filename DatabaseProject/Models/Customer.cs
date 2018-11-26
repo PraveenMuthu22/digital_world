@@ -19,9 +19,9 @@ namespace DatabaseProject.Models
         [Index(IsUnique = true)]
         public string Email { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
+        [Required] public string FirstName { get; set; }
+        [Required] public string LastName { get; set; }
+        [Required] public string Password { get; set; }
         public int? DefaultAddressId { get; set; }
 
 

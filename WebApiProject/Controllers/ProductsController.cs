@@ -42,7 +42,7 @@ namespace WebApiProject.Controllers
 			var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductResponse>());
 			var mapper = config.CreateMapper();
 
-			return mapper.Map<List<Product>, List<ProductResponse>>(productService.GetByCatagory(Category.COMPUTER));
+			return mapper.Map<List<Product>, List<ProductResponse>>(productService.GetByCatagory(Category.Computer));
 		}
 
 		// GET: api/Product/5
@@ -68,25 +68,37 @@ namespace WebApiProject.Controllers
         // POST: api/Products
         [HttpPost]
 		[Route("api/products")]
-		public void Post([FromBody] Product product)
+		public bool Post([FromBody] Product product)
 		{
-			productService.Add(product);
+			bool response = productService.Add(product);
+		    return response;
 		}
 
-		// PUT: api/Products/5
-		[HttpPut]
+	    // POST: api/Products/review
+	    [HttpPost]
+	    [Route("api/products/review")]
+	    public bool PostReview([FromBody] Review review)
+	    {
+	        bool response = productService.AddReview(review);
+	        return response;
+	    }
+
+        // PUT: api/Products/5
+        [HttpPut]
 		[Route("api/products")]
-		public void Put([FromBody] Product product)
+		public bool Put([FromBody] Product product)
 		{
-			productService.Edit(product);
+			bool response = productService.Edit(product);
+		    return response;
 		}
 
 		// DELETE: api/Products/5
 		[HttpDelete]
 		[Route("api/products/{id}")]
-		public void Delete(int id)
+		public bool Delete(int id)
 		{
-			productService.Remove(id);
+			bool response = productService.Remove(id);
+		    return response;
 		}
 	}
 }

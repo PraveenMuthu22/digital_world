@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
+using DatabaseProject;
 using DatabaseProject.Enums;
 using DatabaseProject.Models;
 using DatabaseProject.Services;
@@ -11,11 +13,19 @@ namespace ConsoleAppp
 	{
 		static void Main(string[] args)
 		{
-			ProductService productService = new ProductService();
-			CustomerService customerService = new CustomerService();
+		    Database.SetInitializer(new DropCreateDatabaseAlways<ShopDbContext>());
+		    ProductService productService = new ProductService();
+		    CustomerService customerService = new CustomerService();
 
-		    customerService.AddPurchase(1, 1);
-            Console.ReadLine();
+            Product p1 = new Product
+		    {
+		        //Category = Category.COMPUTER,
+		        Name = "USB cable",
+		        Price = 300,
+		    };
+
+		    productService.Add(p1);
+		    Console.ReadLine();
 		}
 
 		

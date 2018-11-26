@@ -14,22 +14,24 @@ namespace DatabaseProject.Services
 {
 	public class ProductService
 	{
-		public Product Add(Product product)
+		public bool Add(Product product)
 		{
+            //validation
+		    if (string.IsNullOrEmpty(product.Name) || product.Price == 0 || product.Category == 0)
+		    {
+                Debug.WriteLine("Product Name, Price and Catagory cannot be empty");
+		        return false;
+		    }
+
+		    {
+
+		    }
 			using (var context = new ShopDbContext())
 			{
-				try
-				{
-					context.Database.Log = Console.WriteLine;
-					var response = context.Products.Add(product);
-					context.SaveChanges();
-					return response;
-				}
-				catch (SqlException e)
-				{
-					Console.WriteLine(e.ToString());
-					return null;
-				}
+			    context.Database.Log = Console.WriteLine;
+			    var response = context.Products.Add(product);
+			    context.SaveChanges();
+			    return true;
 			}
 		}
 
@@ -55,6 +57,7 @@ namespace DatabaseProject.Services
 				Product product = context.Products.Find(id);
 				if (product == null)
 				{
+                    Debug.WriteLine("product with given id doesn't exist");
 					return false;
 				}
 
@@ -70,12 +73,20 @@ namespace DatabaseProject.Services
 		 */
 		public bool Edit(Product responseProduct)
 		{
-			using (var context = new ShopDbContext())
+		    if (string.IsNullOrEmpty(responseProduct.Name) || responseProduct.Price == 0 || responseProduct.Category == 0 || responseProduct.Id == 0)
+		    {
+		        Debug.WriteLine("Product name, price and category cannot be null");
+                return false;
+		    }
+
+
+            using (var context = new ShopDbContext())
 			{
 				//Get product. If it doesn't exist return null
 				Product oldProduct = context.Products.Find(responseProduct.Id);
 				if (oldProduct == null)
 				{
+                    Debug.WriteLine("Product of given id doesn't exist in database");
 					return false;
 				}
 
@@ -109,24 +120,36 @@ namespace DatabaseProject.Services
 		 */
 		public bool AddReview(Review review)
 		{
+            //validate
+		    if (review.CustomerId == 0 || review.ProductId == 0 || review.Stars == 0 ||
+		        string.IsNullOrEmpty(review.Text))
+		    {
+                Debug.WriteLine("customerId, productId, stars and text cannot be null in review");
+		        return false;
+		    }
+
 			using (var context = new ShopDbContext())
 			{
 				Product product = context.Products.Find(review.ProductId);
 				if (product == null)
 				{
-					return false;
+				    Debug.WriteLine("Product of given id doesn't exist in database");
+                    return false;
 				}
 
 				Customer customer = context.Customers.Find(review.CustomerId);
 				if (customer == null)
 				{
-					return false;
+				    Debug.WriteLine("Customer of given id doesn't exist in database");
+                    return false;
 				}
 
                 //add customer and product reference to review
 			    review.Customer = customer;
 			    review.Product = product;
 
+                //Add review to both customer and product objects
+                customer.Reviews.Add(review);
 				product.Reviews.Add(review);
 
 				context.SaveChanges();
@@ -144,9 +167,10 @@ namespace DatabaseProject.Services
 				Product oldProduct = context.Products.Find(id);
 				if (oldProduct == null)
 				{
-					return null;
+				    Debug.WriteLine("Product of given id doesn't exist in database");
+                    return null;
 				}
-
+                context.Entry(oldProduct).Collection(p => p.Reviews).Load();
 				return oldProduct.Reviews;
 			}
 		}

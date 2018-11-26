@@ -10,11 +10,11 @@ namespace DatabaseProject.Models
     public class Address
     {
         public int Id { get; set; }
-        public string LineOne { get; set; }
+        [Required] public string LineOne { get; set; }
         public string LineTwo { get; set; }
-        public string City { get; set; }
-        public string Zip { get; set; }
-        public string Phone { get; set; }
+        [Required] public string City { get; set; }
+        [Required] public string Zip { get; set; }
+        [Required] public string Phone { get; set; }
 
         [Required] public Customer Customer { get; set; }
         public int CustomerId { get; set; }

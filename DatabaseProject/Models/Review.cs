@@ -6,8 +6,8 @@ namespace DatabaseProject.Models
 	public class Review
 	{
 		public int Id { get; set; }
-		public string Text { get; set; }
-		public int Stars { get; set; }
+	    [Required] public string Text { get; set; }
+	    [Required] public int Stars { get; set; }
 
 		[Required] public Product Product { get; set; }
 		public int ProductId { get; set; }

@@ -25,32 +25,36 @@ namespace DatabaseProject.Migrations
 	        CustomerService customerService = new CustomerService();
 	        Product p = new Product
 	        {
-		        Category = Category.CAMERA,
+		        Category = Category.Camera,
 		        Name = "Nikon",
+                Price = 50000,
 		        Description = "Professional Camera",
 		        Specification = "23 MP",
 	        };
 
 	        Product p1 = new Product
 	        {
-		        Category = Category.COMPUTER,
+		        Category = Category.Computer,
 		        Name = "Surface Pro 3",
 		        Description = "Tablet / Laptop",
+                Price = 200000,
 		        Specification = "i5 16 GB ram",
 	        };
 
 	        Product p2 = new Product
 	        {
-		        Category = Category.COMPUTER,
+		        Category = Category.Computer,
 		        Name = "Macbook pro 2015",
+                Price = 300000,
 		        Description = "Laptop",
 		        Specification = "i5 16 GB ram",
 	        };
 
 	        Product p3 = new Product
 	        {
-		        Category = Category.HEADPHONE_OR_SPEAKER,
+		        Category = Category.HeadphoneOrSpeaker,
 		        Name = "Senheiser in ear earphones",
+                Price = 3000,
 		        Description = "Dun Dun DUn",
 		        Specification = "Noize Cancellation",
 	        };

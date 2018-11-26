@@ -33,25 +33,26 @@ namespace WebApiProject.Controllers
 		// POST: api/Customers
 		[HttpPost]
 		[Route("api/Customers")]
-		public void Post([FromBody]Customer customer)
+		public bool Post([FromBody]Customer customer)
         {
-	        customerService.Add(customer);
+	        return customerService.Add(customer);
+
 		}
 
 		// POST: api/Customers/address
 		[HttpPost]
 	    [Route("api/Customers/address")]
-	    public void Post([FromBody]Address address)
+	    public bool PostAddress([FromBody]Address address)
 	    {
-		    customerService.AddAddress(address);
+		    return customerService.AddAddress(address);
 	    }
 
 		// PUT: api/Customers/5
 		[HttpPut]
 		[Route("api/Customers")]
-		public void Put([FromBody]Customer customer)
+		public bool Put([FromBody]Customer customer)
         {
-	        customerService.Edit(customer);
+	        return customerService.Edit(customer);
 		}
 
 		// GET: api/Customers/addresses/1
@@ -65,9 +66,9 @@ namespace WebApiProject.Controllers
 		// PUT: api/Customers/defaultAddress/1/2
 		[HttpPut]
 	    [Route("api/Customers/defaultAddress/{addressId}/{customerId}")]
-	    public void SetDefaultAddress(int addressId, int customerId)
+	    public bool SetDefaultAddress(int addressId, int customerId)
 	    {
-		    customerService.SetDefaultAddress(addressId, customerId);
+		    return customerService.SetDefaultAddress(addressId, customerId);
 	    }
 
 		// GET: api/Customers/defaultAddress/5
@@ -89,9 +90,9 @@ namespace WebApiProject.Controllers
 		// POST: api/Customers/purchase/{customerId}/{productId}
 		[HttpPost]
 	    [Route("api/Customers/purchase/{customerId}/{productId}")]
-	    public void Post(int customerId, int productId)
+	    public bool Post(int customerId, int productId)
 	    {
-		    customerService.AddPurchase(customerId, productId);
+		    return customerService.AddPurchase(customerId, productId);
 	    }
 
 		// GET: api/Customers/purchase/5
@@ -106,9 +107,9 @@ namespace WebApiProject.Controllers
 		// DELETE: api/Customers/5
 		[HttpDelete]
 		[Route("api/Customers/{id}")]
-		public void Delete(int id)
+		public bool Delete(int id)
         {
-	        customerService.Remove(id);
+	        return customerService.Remove(id);
 		}
 
 

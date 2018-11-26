@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Diagnostics;
 using AutoMapper;
 using DatabaseProject.Models;
 using DatabaseProject.Models_Updated;
@@ -12,14 +13,22 @@ namespace DatabaseProject.Services
 		/**
 		 * Add new customer
 		 */
-		public Customer Add(Customer customer)
+		public bool Add(Customer customer)
 		{
+            //validate
+		    if (string.IsNullOrEmpty(customer.FirstName) || string.IsNullOrEmpty(customer.LastName) ||
+		        string.IsNullOrEmpty(customer.Password)
+		        || string.IsNullOrEmpty(customer.Email))
+		    {
+                Debug.WriteLine("First name, Last name, password and email cannot be null");
+		        return false;
+		    }
 			using (var context = new ShopDbContext())
 			{
 				context.Database.Log = Console.WriteLine;
 				var response = context.Customers.Add(customer);
 				context.SaveChanges();
-				return response;
+				return true;
 			}
 		}
 
@@ -45,6 +54,7 @@ namespace DatabaseProject.Services
 				Customer oldCustomer = context.Customers.Find(id);
 				if (oldCustomer == null)
 				{
+                    Debug.WriteLine("No customer with given ID");
 					return false;
 				}
 				context.Customers.Remove(oldCustomer);
@@ -57,12 +67,22 @@ namespace DatabaseProject.Services
 		 */
 		public bool Edit(Customer responseCustomer)
 		{
-			using (var context = new ShopDbContext())
+		    //validate
+		    if (responseCustomer.Id == 0 ||  string.IsNullOrEmpty(responseCustomer.FirstName) || string.IsNullOrEmpty(responseCustomer.LastName) ||
+		        string.IsNullOrEmpty(responseCustomer.Password)
+		        || string.IsNullOrEmpty(responseCustomer.Email))
+		    {
+		        Debug.WriteLine("ID, First name, Last name, password and email cannot be null");
+		        return false;
+		    }
+
+            using (var context = new ShopDbContext())
 			{
 				//Get Customer. If it doesn't exist return null
 				Customer oldCustomer = context.Customers.Find(responseCustomer.Id);
 				if (oldCustomer == null)
 				{
+                    Debug.WriteLine("Customer with given ID doesn't exist");
 					return false;
 				}
 
@@ -82,11 +102,19 @@ namespace DatabaseProject.Services
 		 */
 		public bool AddAddress(Address address)
 		{
-			using (var context = new ShopDbContext())
+            //validate
+            if(string.IsNullOrEmpty(address.City) || string.IsNullOrEmpty(address.LineOne)  || string.IsNullOrEmpty(address.Phone) 
+               || string.IsNullOrEmpty(address.Zip) || string.IsNullOrEmpty(address.City) || address.CustomerId == 0)
+		    {
+                Debug.WriteLine("City, LineOne, Phone, Zip, City and customerId cannot be null");
+		    }
+
+            using (var context = new ShopDbContext())
 			{
 				Customer customer = context.Customers.Find(address.CustomerId);
 				if (customer == null)
 				{
+                    Debug.WriteLine("No customer with given id");
 					return false;
 				}
 
@@ -114,13 +142,15 @@ namespace DatabaseProject.Services
 				Customer customer = context.Customers.Find(customerId);
 				if (customer == null)
 				{
-					return false;
+				    Debug.WriteLine("No customer with given id");
+                    return false;
 				}
 
 				Address address = context.Addresses.Find(addressId);
 				if (address == null)
 				{
-					return false;
+				    Debug.WriteLine("No address with given id");
+                    return false;
 				}
 				customer.DefaultAddressId = address.Id;
 				context.SaveChanges();
@@ -135,7 +165,8 @@ namespace DatabaseProject.Services
 				Customer customer = context.Customers.Find(customerId);
 				if (customer == null)
 				{
-					return null;
+				    Debug.WriteLine("No customer with given id");
+                    return null;
 				}
 				return context.Addresses.Find(customer.DefaultAddressId);
 			}
@@ -152,7 +183,8 @@ namespace DatabaseProject.Services
 				Customer customer = context.Customers.Find(id);
 				if (customer == null)
 				{
-					return null;
+				    Debug.WriteLine("No customer with given id");
+                    return null;
 				}
 
 				context.Entry(customer).Collection(c => c.Addresses).Load();
@@ -168,7 +200,8 @@ namespace DatabaseProject.Services
 				Customer customer = context.Customers.Find(id);
 				if (customer == null)
 				{
-					return null;
+				    Debug.WriteLine("No customer with given id");
+                    return null;
 				}
 				
 				context.Entry(customer).Collection(c => c.Reviews).Load();
@@ -183,13 +216,15 @@ namespace DatabaseProject.Services
 				Customer customer = context.Customers.Find(customerId);
 				if (customer == null)
 				{
-					return false;
+				    Debug.WriteLine("No customer with given id");
+                    return false;
 				}
 
 				Product product = context.Products.Find(productId);
 				if (product == null)
 				{
-					return false;
+				    Debug.WriteLine("No product with given id");
+                    return false;
 				}
 
 			    Purchase purchase = new Purchase
@@ -215,7 +250,8 @@ namespace DatabaseProject.Services
 				Customer customer = context.Customers.Find(id);
 				if (customer == null)
 				{
-					return null;
+				    Debug.WriteLine("No customer with given id");
+                    return null;
 				}
 				
 				context.Entry(customer).Collection(c => c.Purchases).Load();

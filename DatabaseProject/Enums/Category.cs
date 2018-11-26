@@ -8,11 +8,12 @@ namespace DatabaseProject.Enums
 {
 	public enum Category
 	{
-		COMPUTER,
-		TV,
-		HEADPHONE_OR_SPEAKER,
-		CAMERA,
-		MOBILE_PHONE,
-		WEARABLE
+        Undefined,
+		Computer,
+		Tv,
+		HeadphoneOrSpeaker,
+		Camera,
+		MobilePhone,
+		Wearable
 	}
 }

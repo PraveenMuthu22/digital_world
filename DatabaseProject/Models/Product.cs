@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using DatabaseProject.Enums;
 
 namespace DatabaseProject.Models
@@ -11,11 +12,11 @@ namespace DatabaseProject.Models
 		}
 
 		public int Id { get; set; }
-		public Category Category { get; set; }
-		public string Name { get; set; }  
+		[Required] public Category Category { get; set; }
+	    [Required] public string Name { get; set; }  
 		public string Description { get; set; }
 		public string Specification { get; set; }
-	    public double Price { get; set; }
+	    [Required]  public double Price { get; set; }
 		public List<Review> Reviews { get; set; }
 		public List<Customer> Customers { get; set; }
 	}

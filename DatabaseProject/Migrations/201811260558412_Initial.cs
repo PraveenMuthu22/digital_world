@@ -3,7 +3,7 @@ namespace DatabaseProject.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -12,11 +12,11 @@ namespace DatabaseProject.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        LineOne = c.String(),
+                        LineOne = c.String(nullable: false),
                         LineTwo = c.String(),
-                        City = c.String(),
-                        Zip = c.String(),
-                        Phone = c.String(),
+                        City = c.String(nullable: false),
+                        Zip = c.String(nullable: false),
+                        Phone = c.String(nullable: false),
                         CustomerId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -29,9 +29,9 @@ namespace DatabaseProject.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Email = c.String(maxLength: 50),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        Password = c.String(),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
+                        Password = c.String(nullable: false),
                         DefaultAddressId = c.Int(),
                         Product_Id = c.Int(),
                     })
@@ -61,7 +61,7 @@ namespace DatabaseProject.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Category = c.Int(nullable: false),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                         Description = c.String(),
                         Specification = c.String(),
                         Price = c.Double(nullable: false),
@@ -73,7 +73,7 @@ namespace DatabaseProject.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Text = c.String(),
+                        Text = c.String(nullable: false),
                         Stars = c.Int(nullable: false),
                         ProductId = c.Int(nullable: false),
                         CustomerId = c.Int(nullable: false),
