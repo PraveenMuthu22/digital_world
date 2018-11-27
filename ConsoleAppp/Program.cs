@@ -24,8 +24,9 @@ namespace ConsoleAppp
 		        Price = 300,
 		    };
 
-		    productService.Add(p1);
-		    Console.ReadLine();
+            // productService.Add(p1);
+		    customerService.GetReviews(1).ForEach(r => Debug.WriteLine(r.Text));
+            Console.ReadLine();
 		}
 
 		

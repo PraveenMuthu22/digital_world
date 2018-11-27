@@ -7,6 +7,7 @@ using System.Web.Http;
 using AutoMapper;
 using DatabaseProject.Models;
 using DatabaseProject.Services;
+using WebApiProject.Response_Models;
 using WebApiProject.View_Models;
 
 namespace WebApiProject.Controllers
@@ -58,15 +59,18 @@ namespace WebApiProject.Controllers
 		// GET: api/Customers/addresses/1
 		[HttpGet]
 	    [Route("api/Customers/addresses/{id}")]
-	    public List<Address> GetAddresses(int id)
+	    public List<AddressResponse> GetAddresses(int id)
 	    {
-		    return customerService.GetAddresses(id);
+	        var config = new MapperConfiguration(cfg => cfg.CreateMap<Address, AddressResponse>());
+	        var mapper = config.CreateMapper();
+
+	        return mapper.Map<List<Address>, List<AddressResponse>>(customerService.GetAddresses(id));
 	    }
 
 		// PUT: api/Customers/defaultAddress/1/2
 		[HttpPut]
 	    [Route("api/Customers/defaultAddress/{addressId}/{customerId}")]
-	    public bool SetDefaultAddress(int addressId, int customerId)
+	    public bool PutDefaultAddress(int addressId, int customerId)
 	    {
 		    return customerService.SetDefaultAddress(addressId, customerId);
 	    }
@@ -74,33 +78,51 @@ namespace WebApiProject.Controllers
 		// GET: api/Customers/defaultAddress/5
 		[HttpGet]
 	    [Route("api/Customers/defaultAddress/{id}")]
-	    public Address GetDefaultAddress(int id)
+	    public AddressResponse GetDefaultAddress(int id)
 	    {
-		    return customerService.GetDefaulAddress(id);
+	        var config = new MapperConfiguration(cfg => cfg.CreateMap<Address, AddressResponse>());
+	        var mapper = config.CreateMapper();
+	        return mapper.Map<AddressResponse>(customerService.GetDefaulAddress(id));
 	    }
 
-		// GET: api/Customers/reviews/5
-		[HttpGet]
+        // DELETE: api/Customers/address/1/1
+        [HttpDelete]
+        [Route("api/Customers/address/{customerId}/{addressId}")]
+        public bool DeleteAddress(int customerId, int addressId)
+        {
+            return customerService.RemoveAddress(customerId, addressId);
+        }
+
+
+        // GET: api/Customers/reviews/5
+        [HttpGet]
 	    [Route("api/Customers/reviews/{id}")]
-	    public List<Review> GetReviews(int id)
+	    public List<ReviewResponse> GetReviews(int id)
 	    {
-		    return customerService.GetReviews(id);
+	        var config = new MapperConfiguration(cfg => cfg.CreateMap<Review, ReviewResponse>());
+	        var mapper = config.CreateMapper();
+
+	        return mapper.Map<List<Review>, List<ReviewResponse>>(customerService.GetReviews(id));
 	    }
 
 		// POST: api/Customers/purchase/{customerId}/{productId}
 		[HttpPost]
 	    [Route("api/Customers/purchase/{customerId}/{productId}")]
-	    public bool Post(int customerId, int productId)
+	    public bool PostPurchase(int customerId, int productId)
 	    {
 		    return customerService.AddPurchase(customerId, productId);
 	    }
 
-		// GET: api/Customers/purchase/5
-		[HttpGet]
+
+        // GET: api/Customers/purchase/5
+        [HttpGet]
 	    [Route("api/Customers/purchase/{id}")]
-	    public List<Purchase> GetPurchases(int id)
+	    public List<PurchaseResponse> GetPurchases(int id)
 	    {
-		    return customerService.GetPurchases(id);
+	        var config = new MapperConfiguration(cfg => cfg.CreateMap<Purchase, PurchaseResponse>());
+	        var mapper = config.CreateMapper();
+
+	        return mapper.Map<List<Purchase>, List<PurchaseResponse>>(customerService.GetPurchases(id));
 	    }
 
 
@@ -111,6 +133,14 @@ namespace WebApiProject.Controllers
         {
 	        return customerService.Remove(id);
 		}
+
+        // DELETE: api/Customers/Review/1/1
+        [HttpDelete]
+        [Route("api/Customers/review/{customerId}/{reviewId}")]
+        public bool DeleteReview(int customerId, int reviewId)
+        {
+            return customerService.RemoveReview(customerId, reviewId);
+        }
 
 
     }

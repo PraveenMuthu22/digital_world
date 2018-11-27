@@ -209,6 +209,54 @@ namespace DatabaseProject.Services
 			}
 		}
 
+	    public bool RemoveReview(int customerId, int reviewId)
+	    {
+	        using (var context = new ShopDbContext())
+	        {
+	            Review review = context.Reviews.Find(reviewId);
+	            if (review == null)
+	            {
+	                Debug.WriteLine("No review with given id");
+	                return false;
+	            }
+
+	            if (review.CustomerId != customerId)
+	            {
+	                Debug.WriteLine("Review doesn't belong to given customer");
+	                return false;
+	            }
+
+	            context.Reviews.Remove(review);
+	            context.SaveChanges();
+	            return true;
+	        }
+	    }
+
+
+
+        public bool RemoveAddress(int customerId, int addressId)
+	    {
+	        using (var context = new ShopDbContext())
+	        {
+	            Address address = context.Addresses.Find(addressId);
+	            if (address == null)
+	            {
+	                Debug.WriteLine("No address with given id");
+	                return false;
+	            }
+
+	            if (address.CustomerId != customerId)
+	            {
+	                Debug.WriteLine("Address doesn't belong to given customer");
+	                return false;
+	            }
+
+                context.Addresses.Remove(address);
+	            context.SaveChanges();
+	            return true;
+	        }
+        }
+
 		public bool AddPurchase(int customerId, int productId)
 		{
 			using (var context = new ShopDbContext())
