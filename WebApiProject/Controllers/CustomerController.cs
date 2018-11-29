@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using AutoMapper;
 using DatabaseProject.Models;
@@ -23,9 +25,15 @@ namespace WebApiProject.Controllers
 
 		// GET: api/Customers/5
 		[HttpGet]
-		[Route("api/Customers/{id}")]
+		[Authorize]
+        [Route("api/Customers/{id}")]
 		public CustomerResponse Get(int id)
-        {
+		{
+		    var claimsPrincipal = User as ClaimsPrincipal;
+		    var username = claimsPrincipal?.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier: praveen@gmail.com");
+		   var user = claimsPrincipal.Claims.FirstOrDefault();
+            Debug.WriteLine(user.Value);
+            
 			var config = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerResponse>());
 	        var mapper = config.CreateMapper();
 	        return mapper.Map<CustomerResponse>(customerService.Get(id));
